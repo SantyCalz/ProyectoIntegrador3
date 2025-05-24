@@ -24,6 +24,7 @@ Este proyecto es un sistema de reservas de canchas deportivas con una ventana f�
   .\venv\Scripts\Activate.ps1
   ```
 - Si ves (venv) al principio de la línea, el entorno está activo.
+- **IMPORTANTE:** Si descargaste el proyecto y ves una carpeta `venv`, bórrala antes de crear la tuya. Nunca copies la carpeta `venv` de otra PC.
 
 ### 5. Instala las dependencias (los programas que necesita Python)
 - Ejecuta este comando en la misma ventana:
@@ -32,8 +33,9 @@ Este proyecto es un sistema de reservas de canchas deportivas con una ventana f�
   ```
 - Si te da error, prueba con:
   ```powershell
-  pip install customtkinter psycopg2-binary tkcalendar
+  pip install customtkinter psycopg2-binary tkcalendar pillow requests
   ```
+- **NOTA:** No intentes instalar `tkinter` por pip, ya viene con Python.
 
 ### 6. Crea la base de datos en PostgreSQL
 - Abre el programa pgAdmin (o DBeaver, o la terminal de PostgreSQL).
@@ -76,6 +78,7 @@ Este proyecto es un sistema de reservas de canchas deportivas con una ventana f�
 ---
 
 ## ¿Qué hago si algo no funciona?
+- Si ves un error como "Fatal error in launcher...", borra la carpeta `venv` y vuelve a crear el entorno virtual desde cero.
 - Revisa que los datos de usuario, contraseña y base de datos estén bien escritos.
 - Asegúrate de que PostgreSQL esté abierto y funcionando.
 - Si tienes dudas, consulta a tu compañero o busca el error en Google.

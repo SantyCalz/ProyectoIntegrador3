@@ -1,0 +1,25 @@
+# Ignorar entorno virtual
+venv/
+
+# Ignorar archivos temporales de Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorar archivos de bases de datos temporales
+*.db
+*.sqlite3
+
+# Ignorar archivos de configuración de editores
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de logs
+*.log
+
+# Ignorar carpeta data si solo contiene archivos temporales
+# (Descomenta la siguiente línea si no quieres subir nada de data)
+# data/
