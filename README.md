@@ -1,96 +1,105 @@
 # Sistema de Reservas - Grupo CodeX5
 
-Este proyecto es un sistema de reservas de canchas deportivas con interfaz gráfica en Python y base de datos PostgreSQL.
+Este proyecto es un sistema de reservas de canchas deportivas con una ventana fácil de usar (no es por consola) y guarda los datos en una base de datos PostgreSQL.
 
-## Requisitos
-- Python 3.10 o superior
-- PostgreSQL instalado y corriendo
-- Acceso a un usuario de PostgreSQL con permisos para crear tablas
+---
 
-## Instalación de dependencias
+## Guía fácil: ¿Cómo hago para que funcione en mi PC?
 
-1. Crea y activa un entorno virtual (opcional pero recomendado):
-   ```powershell
-   python -m venv venv
-   .\venv\Scripts\Activate.ps1
-   ```
+### 1. Descarga el proyecto
+- Descarga el repositorio desde GitHub o copia todos los archivos a una carpeta nueva en tu computadora.
 
-2. Instala las dependencias:
-   ```powershell
-   pip install -r requirements.txt
-   ```
+### 2. Instala Python
+- Si no tienes Python, descárgalo e instálalo desde [python.org](https://www.python.org/downloads/).
+- Asegúrate de elegir la versión 3.10 o superior.
 
-# También puedes instalar todo con este comando:
-```powershell
-pip install customtkinter psycopg2 tkcalendar
-```
+### 3. Instala PostgreSQL
+- Descarga e instala PostgreSQL desde [postgresql.org](https://www.postgresql.org/download/).
+- Recuerda el usuario y la contraseña que elijas durante la instalación.
 
-## Configuración de la base de datos
+### 4. Crea un entorno virtual (opcional, recomendado)
+- Abre PowerShell en la carpeta del proyecto y ejecuta:
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
+- Si ves (venv) al principio de la línea, el entorno está activo.
 
-### 1. Crear la base de datos (solo la primera vez)
-Debes crear la base de datos en PostgreSQL antes de ejecutar el sistema. Puedes hacerlo desde pgAdmin, DBeaver o con el siguiente comando en consola:
+### 5. Instala las dependencias (los programas que necesita Python)
+- Ejecuta este comando en la misma ventana:
+  ```powershell
+  pip install -r requirements.txt
+  ```
+- Si te da error, prueba con:
+  ```powershell
+  pip install customtkinter psycopg2-binary tkcalendar
+  ```
 
-```sql
-CREATE DATABASE nombre_base;
-```
+### 6. Crea la base de datos en PostgreSQL
+- Abre el programa pgAdmin (o DBeaver, o la terminal de PostgreSQL).
+- Ejecuta este comando (puedes copiar y pegar):
+  ```sql
+  CREATE DATABASE nombre_base;
+  ```
+- Cambia `nombre_base` por el nombre que quieras (por ejemplo: reservas_canchas).
 
-O desde PowerShell:
-```powershell
-psql -U usuario -h localhost -c "CREATE DATABASE nombre_base;"
-```
+### 7. Decile al programa cómo conectarse a la base de datos
+- En la misma ventana de PowerShell, pon estos comandos (cambiando los datos por los tuyos):
+  ```powershell
+  $env:PG_DB = "nombre_base"
+  $env:PG_USER = "tu_usuario"
+  $env:PG_PASSWORD = "tu_contraseña"
+  $env:PG_HOST = "localhost"
+  $env:PG_PORT = "5432"
+  ```
+- Si no sabes tu usuario, suele ser `postgres`.
 
-### 2. Configurar los datos de conexión
-Puedes configurar los datos de conexión a PostgreSQL usando variables de entorno. Ejemplo (en PowerShell):
+### 8. Crea las tablas automáticamente
+- Ejecuta:
+  ```powershell
+  python init_db.py
+  ```
+- Si todo está bien, verás: `Base de datos y tablas creadas correctamente.`
 
-```powershell
-$env:PG_DB = "nombre_base"
-$env:PG_USER = "usuario"
-$env:PG_PASSWORD = "contraseña"
-$env:PG_HOST = "localhost"
-$env:PG_PORT = "5432"
-```
+### 9. Abre el sistema de reservas
+- Ejecuta:
+  ```powershell
+  python interfaz.py
+  ```
+- Se abrirá una ventana para usar el sistema.
 
-O edita directamente los valores por defecto en `init_db.py` y `conexion.py`.
+### 10. ¡Listo para usar!
+- Haz clic en "Registrarse" para crear tu usuario.
+- Inicia sesión y prueba crear, ver o cancelar reservas.
+- Si tienes un usuario admin, prueba el panel de administrador.
 
-### 3. Crear las tablas automáticamente
-Ejecuta el script para crear las tablas y restricciones necesarias:
+---
 
-```powershell
-python init_db.py
-```
+## ¿Qué hago si algo no funciona?
+- Revisa que los datos de usuario, contraseña y base de datos estén bien escritos.
+- Asegúrate de que PostgreSQL esté abierto y funcionando.
+- Si tienes dudas, consulta a tu compañero o busca el error en Google.
 
-Verás el mensaje `Base de datos y tablas creadas correctamente.` si todo salió bien.
+---
 
-## Ejecución del sistema
-
-1. Asegúrate de que el servidor de PostgreSQL esté corriendo y que la base de datos y tablas existan.
-2. Ejecuta la interfaz gráfica:
-   ```powershell
-   python interfaz.py
-   ```
-
-## Estructura del proyecto
+## ¿Cómo está organizado el proyecto?
 ```
 ProyectoIntegrador/
-├── interfaz.py         # Interfaz gráfica (CustomTkinter)
-├── usuarios.py         # Lógica de usuarios (registro, login)
-├── reservas.py         # Lógica de reservas (crear, ver, eliminar)
-├── conexion.py         # Conexión a PostgreSQL
-├── init_db.py          # Script para crear tablas automáticamente
-├── requirements.txt    # Dependencias
+├── interfaz.py         # Ventana principal del sistema
+├── usuarios.py         # Todo lo de usuarios (registrar, login)
+├── reservas.py         # Todo lo de reservas (crear, ver, eliminar)
+├── conexion.py         # Conexión a la base de datos
+├── init_db.py          # Script para crear las tablas automáticamente
+├── requirements.txt    # Lista de programas que necesita Python
 ├── data/               # Carpeta para archivos temporales (no se usa con PostgreSQL)
 ```
 
-## Créditos y roles
+## Quién hizo cada parte
 - Santiago: Base de datos y conexión
 - Santino: Módulo de usuarios
 - Leo: Módulo de reservas
 - Ana: Interfaz gráfica y documentación
 
-## Notas
-- Si tienes problemas de conexión, revisa los datos de usuario, contraseña y nombre de base de datos.
-- Si cambias la estructura de las tablas, actualiza el script `init_db.py`.
-- No subas tus contraseñas ni datos sensibles al repositorio.
-
 ---
+¡Siguiendo estos pasos, cualquier persona puede instalar y usar el sistema en su PC, aunque no sepa de programación!
 
