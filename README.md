@@ -45,16 +45,36 @@ Este proyecto es un sistema de reservas de canchas deportivas con una ventana f�
   ```
 - Cambia `nombre_base` por el nombre que quieras (por ejemplo: reservas_canchas).
 
-### 7. Decile al programa cómo conectarse a la base de datos
-- En la misma ventana de PowerShell, pon estos comandos (cambiando los datos por los tuyos):
-  ```powershell
-  $env:PG_DB = "nombre_base"
-  $env:PG_USER = "tu_usuario"
-  $env:PG_PASSWORD = "tu_contraseña"
-  $env:PG_HOST = "localhost"
-  $env:PG_PORT = "5432"
+### 7. Configura la conexión a la base de datos en el archivo conexion.py
+
+- Abre el archivo `conexion.py` con un editor de texto (por ejemplo, VS Code o Bloc de notas).
+- Busca la parte donde se define la conexión, que debería verse así:
+  ```python
+  import psycopg2
+
+  def get_connection():
+      return psycopg2.connect(
+          dbname="nombre_base",
+          user="usuario",
+          password="contraseña",
+          host="localhost",
+          port="5432"
+      )
   ```
-- Si no sabes tu usuario, suele ser `postgres`.
+- Cambia los valores por los de tu base de datos. Por ejemplo, si tu base se llama `ProyectoIntegrador`, tu usuario es `postgres` y tu contraseña es `admin`, déjalo así:
+  ```python
+  def get_connection():
+      return psycopg2.connect(
+          dbname="ProyectoIntegrador",
+          user="postgres",
+          password="admin",
+          host="localhost",
+          port="5432"
+      )
+  ```
+- Guarda el archivo.
+
+Así, el sistema sabrá cómo conectarse a tu base de datos cada vez que lo uses.
 
 ### 8. Crea las tablas automáticamente
 - Ejecuta:
