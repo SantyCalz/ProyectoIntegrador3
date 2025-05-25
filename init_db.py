@@ -2,17 +2,17 @@ import psycopg2
 import os
 
 # Configuración de conexión (puedes modificar o usar variables de entorno)
-DB_NAME = os.getenv("PG_DB", "nombre_base")
-DB_USER = os.getenv("PG_USER", "usuario")
-DB_PASS = os.getenv("PG_PASSWORD", "contraseña")
+DB_NAME = os.getenv("PG_DB", "ProyectoIntegrador")
+DB_USER = os.getenv("PG_USER", "postgres")
+DB_PASS = os.getenv("PG_PASSWORD", "admin")
 DB_HOST = os.getenv("PG_HOST", "localhost")
 DB_PORT = os.getenv("PG_PORT", "5432")
 
-# SQL para crear tablas y restricciones exactamente como en tu pgAdmin
+# SQL para crear tablas y restricciones (usando SERIAL para crear la secuencia automáticamente)
 SQL = '''
 CREATE TABLE IF NOT EXISTS public.usuarios
 (
-    id integer NOT NULL DEFAULT nextval('usuarios_id_seq'::regclass),
+    id SERIAL PRIMARY KEY,
     nombre text NOT NULL,
     apellido text NOT NULL,
     correo text NOT NULL,
@@ -20,18 +20,16 @@ CREATE TABLE IF NOT EXISTS public.usuarios
     telefono text NOT NULL,
     "contraseña" text NOT NULL,
     rol text NOT NULL DEFAULT 'user',
-    CONSTRAINT usuarios_pkey PRIMARY KEY (id),
     CONSTRAINT usuarios_correo_key UNIQUE (correo)
 );
 
 CREATE TABLE IF NOT EXISTS public.reservas
 (
-    id integer NOT NULL DEFAULT nextval('reservas_id_seq'::regclass),
+    id SERIAL PRIMARY KEY,
     usuario_id integer NOT NULL,
     fecha date NOT NULL,
     hora time without time zone NOT NULL,
     cancha text NOT NULL,
-    CONSTRAINT reservas_pkey PRIMARY KEY (id),
     CONSTRAINT reservas_fecha_hora_cancha_key UNIQUE (fecha, hora, cancha),
     CONSTRAINT reservas_usuario_id_fkey FOREIGN KEY (usuario_id)
         REFERENCES public.usuarios (id) MATCH SIMPLE
@@ -54,9 +52,9 @@ def main():
         conn.commit()
         cur.close()
         conn.close()
-        print("Base de datos y tablas creadas correctamente.")
+        print("Tablas creadas correctamente en la base de datos.")
     except Exception as e:
-        print(f"Error al crear la base de datos/tablas: {e}")
+        print(f"Error al crear las tablas: {e}")
 
 if __name__ == "__main__":
     main()
